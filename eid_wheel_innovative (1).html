@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 عجلة العيد السحرية 3.0 - ألعاب مبتكرة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0d3328 0%, #1a5c3a 25%, #d4a017 60%, #8b4513 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            font-size: 1.5rem;
+            opacity: 0.15;
+            animation: particleFloat linear infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255,255,255,0.97);
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4), 0 0 0 4px rgba(212,175,55,0.3);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* PHASE 0: Name Input */
+        .phase-0 { position: relative; z-index: 2; }
+        .phase-0 h1 {
+            font-size: 1.7rem;
+            color: #1a5c3a;
+            margin-bottom: 5px;
+            font-weight: 900;
+        }
+        .phase-0 .tagline {
+            color: #8b4513;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .name-input-container {
+            background: linear-gradient(135deg, #fff8e7, #ffecb3);
+            border: 3px solid #d4a017;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .name-input-container label {
+            display: block;
+            color: #5d4037;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 3px solid #d4a017;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            background: white;
+            color: #1a5c3a;
+            font-weight: 700;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .name-input:focus {
+            border-color: #1a5c3a;
+            box-shadow: 0 0 20px rgba(26,92,58,0.2);
+            transform: scale(1.02);
+        }
+
+        .name-input::placeholder {
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 15px;
+            border: none;
+            background: linear-gradient(135deg, #2e8b57, #1a5c3a);
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(46,139,87,0.4);
+        }
+
+        .start-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(46,139,87,0.5);
+        }
+
+        /* PHASE 1: Gender + Slot */
+        .phase-1 { display: none; position: relative; z-index: 2; }
+        .phase-1 h1 {
+            font-size: 1.6rem;
+            color: #1a5c3a;
+            margin-bottom: 5px;
+            font-weight: 900;
+        }
+        .phase-1 .tagline {
+            color: #8b4513;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .welcome-name {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border: 2px solid #2e8b57;
+            border-radius: 15px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            color: #1a5c3a;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .gender-select {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .gender-btn {
+            padding: 18px 30px;
+            border-radius: 18px;
+            border: 3px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+        .gender-btn .emoji { font-size: 2.2rem; }
+        .gender-btn:hover {
+            transform: scale(1.05);
+            border-color: #d4a017;
+            box-shadow: 0 8px 25px rgba(212,160,23,0.2);
+        }
+        .gender-btn.selected {
+            border-color: #d4a017;
+            background: linear-gradient(135deg, #fff8e7, #ffecb3);
+            box-shadow: 0 8px 25px rgba(212,160,23,0.3);
+        }
+
+        .slot-machine {
+            background: linear-gradient(135deg, #2c1810, #4a2c17);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 4px solid #d4a017;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+        }
+        .slot-display {
+            background: #1a1a1a;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 3px solid #d4a017;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .slot-reel {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 2px solid #d4a017;
+        }
+        .spin-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: none;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(231,76,60,0.4);
+        }
+        .spin-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(231,76,60,0.5);
+        }
+        .spin-btn:active { transform: scale(0.97); }
+        .spin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* PHASE 2: Personal Card */
+        .phase-2 {
+            display: none;
+            position: relative;
+            z-index: 2;
+            animation: revealUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes revealUp {
+            from { opacity: 0; transform: translateY(60px) scale(0.8); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .win-animation {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            animation: winBounce 0.6s ease-out;
+        }
+        @keyframes winBounce {
+            0% { transform: scale(0) rotate(-180deg); }
+            60% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* Personal Card */
+        .personal-card {
+            background: linear-gradient(135deg, #fff8e7 0%, #ffecb3 50%, #ffe0b2 100%);
+            border: 4px solid #d4a017;
+            border-radius: 25px;
+            padding: 30px;
+            margin: 15px 0;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(212,160,23,0.3);
+            transform: rotate(-1deg);
+            transition: transform 0.3s;
+        }
+
+        .personal-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .personal-card::before, .personal-card::after {
+            content: "";
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        .personal-card::before { left: -17px; }
+        .personal-card::after { right: -17px; }
+
+        .card-stamp {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            transform: rotate(-10deg);
+            box-shadow: 0 3px 10px rgba(231,76,60,0.3);
+        }
+
+        .personal-card .name-display {
+            font-size: 1.6rem;
+            color: #1a5c3a;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .personal-card .greeting-text {
+            font-size: 1.15rem;
+            color: #5d4037;
+            font-weight: 700;
+            line-height: 2;
+        }
+
+        .personal-card .card-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #d4a017;
+            color: #8b4513;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        /* Scratch card */
+        .scratch-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin: 15px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .scratch-message {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 25px;
+            font-size: 1.1rem;
+            color: #1a5c3a;
+            font-weight: 700;
+            line-height: 2;
+            text-align: center;
+        }
+        .scratch-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #d4a017, #b8860b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="28" font-size="28">🪙</text></svg>'), auto;
+            touch-action: none;
+        }
+        .scratch-overlay-text {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+        .scratch-overlay.scratched {
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        /* ====== NEW INNOVATIVE GAMES ====== */
+        .games-section {
+            margin: 20px 0;
+        }
+        .games-section h3 {
+            color: #8b4513;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        /* Game 1: Sheep Chase - مطاردة الخروف */
+        .sheep-chase {
+            background: linear-gradient(135deg, #87CEEB, #98FB98);
+            border: 3px solid #2e8b57;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sheep-chase h4 {
+            color: #1a5c3a;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .chase-area {
+            position: relative;
+            height: 180px;
+            background: linear-gradient(180deg, #87CEEB 0%, #90EE90 40%, #228B22 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: crosshair;
+            border: 3px solid #1a5c3a;
+        }
+        .chase-sheep {
+            position: absolute;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+        .chase-sheep:hover { transform: scale(1.3); }
+        .chase-sheep.caught {
+            animation: sheepCaughtAnim 0.6s ease-out forwards;
+        }
+        @keyframes sheepCaughtAnim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5) rotate(15deg); }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+        .obstacle {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+        .chase-score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 800;
+            color: #1a5c3a;
+            font-size: 0.9rem;
+        }
+        .chase-timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 800;
+            color: #e74c3c;
+            font-size: 0.9rem;
+        }
+        .chase-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            color: #1a5c3a;
+            font-weight: 700;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chase-start-btn {
+            padding: 10px 25px;
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        .chase-start-btn:hover { transform: scale(1.05); }
+
+        /* Game 2: Eid Memory - ذاكرة العيد */
+        .eid-memory {
+            background: linear-gradient(135deg, #fff8e7, #ffecb3);
+            border: 3px solid #d4a017;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .eid-memory h4 {
+            color: #8b4513;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #d4a017, #b8860b);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #8b4513;
+            user-select: none;
+        }
+        .memory-card:hover { transform: scale(1.05); }
+        .memory-card.flipped {
+            background: white;
+            transform: rotateY(180deg);
+        }
+        .memory-card.matched {
+            background: linear-gradient(135deg, #2e8b57, #1a5c3a);
+            animation: matchPulse 0.5s ease-out;
+        }
+        @keyframes matchPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .memory-card .card-back {
+            display: none;
+        }
+        .memory-card.flipped .card-back {
+            display: block;
+        }
+        .memory-card.flipped .card-front {
+            display: none;
+        }
+        .memory-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            color: #8b4513;
+            font-weight: 700;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Game 3: Meat Delivery - سباق التوزيع */
+        .meat-delivery {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            border: 3px solid #c71585;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .meat-delivery h4 {
+            color: #880e4f;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .delivery-track {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(90deg, #8B4513 0%, #D2691E 50%, #8B4513 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #880e4f;
+            margin-bottom: 10px;
+        }
+        .delivery-car {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 2.5rem;
+            transition: left 0.3s ease-out;
+            z-index: 2;
+        }
+        .delivery-house {
+            position: absolute;
+            bottom: 10px;
+            font-size: 2rem;
+        }
+        .delivery-obstacle {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: obstacleMove 3s linear infinite;
+        }
+        @keyframes obstacleMove {
+            0% { left: 100%; }
+            100% { left: -50px; }
+        }
+        .delivery-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .delivery-btn {
+            padding: 12px 20px;
+            border-radius: 15px;
+            border: none;
+            background: linear-gradient(135deg, #c71585, #880e4f);
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .delivery-btn:hover { transform: scale(1.05); }
+        .delivery-btn:active { transform: scale(0.95); }
+        .delivery-progress {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .delivery-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #c71585, #ff69b4);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .delivery-result {
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            color: #880e4f;
+            font-weight: 700;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Energy */
+        .energy-section {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border: 3px solid #2e8b57;
+            border-radius: 18px;
+            padding: 18px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .energy-section h3 {
+            color: #1a5c3a;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        .energy-bar {
+            width: 100%;
+            height: 22px;
+            background: #e0e0e0;
+            border-radius: 11px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .energy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #66bb6a, #2e8b57);
+            border-radius: 11px;
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+        .energy-text {
+            color: #1a5c3a;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 22px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: 'Tajawal', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 5px;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #d4a017, #b8860b);
+            color: white;
+            box-shadow: 0 5px 20px rgba(212,160,23,0.3);
+        }
+        .btn-green {
+            background: linear-gradient(135deg, #2e8b57, #1a5c3a);
+            color: white;
+            box-shadow: 0 5px 20px rgba(46,139,87,0.3);
+        }
+        .btn-rose {
+            background: linear-gradient(135deg, #e8b4b8, #c71585);
+            color: white;
+            box-shadow: 0 5px 20px rgba(199,21,133,0.3);
+        }
+        .btn:hover { transform: scale(1.05) translateY(-3px); }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 20px 15px; }
+            .phase-0 h1, .phase-1 h1 { font-size: 1.4rem; }
+            .slot-reel { width: 60px; height: 60px; font-size: 2rem; }
+            .gender-btn { padding: 15px 20px; }
+            .personal-card .name-display { font-size: 1.3rem; }
+            .memory-grid { grid-template-columns: repeat(3, 1fr); }
+            .chase-area { height: 150px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle" style="left: 5%; animation-duration: 9s;">🌙</div>
+    <div class="particle" style="left: 20%; animation-duration: 11s; animation-delay: 1s;">✨</div>
+    <div class="particle" style="left: 35%; animation-duration: 10s; animation-delay: 2s;">🐑</div>
+    <div class="particle" style="left: 50%; animation-duration: 12s; animation-delay: 3s;">🌟</div>
+    <div class="particle" style="left: 65%; animation-duration: 9s; animation-delay: 4s;">🎁</div>
+    <div class="particle" style="left: 80%; animation-duration: 11s; animation-delay: 5s;">✨</div>
+    <div class="particle" style="left: 95%; animation-duration: 10s; animation-delay: 6s;">🐑</div>
+
+    <div class="card">
+        <!-- PHASE 0: Name Input -->
+        <div class="phase-0" id="phase0">
+            <h1>🎰 عجلة العيد السحرية</h1>
+            <p class="tagline">اكتب اسمك عشان نجهزلك كرت خاص!</p>
+
+            <div class="name-input-container">
+                <label for="studentName">✨ اسمك يا بطل/بطلة:</label>
+                <input 
+                    type="text" 
+                    id="studentName" 
+                    class="name-input" 
+                    placeholder="مثال: أحمد، سارة، محمد..."
+                    maxlength="20"
+                    autocomplete="off"
+                >
+                <button class="start-btn" onclick="goToPhase1()">
+                    🚀 يلا نبدأ!
+                </button>
+            </div>
+
+            <p style="color: #888; font-size: 0.85rem; margin-top: 15px;">
+                💡 الكرت هيكون مخصص باسمك وبس!
+            </p>
+        </div>
+
+        <!-- PHASE 1: Gender + Slot -->
+        <div class="phase-1" id="phase1">
+            <h1>🎰 عجلة العيد السحرية</h1>
+            <p class="tagline">اختار جنسك واضغط Spin!</p>
+
+            <div class="welcome-name" id="welcomeName"></div>
+
+            <div class="gender-select">
+                <button class="gender-btn" id="btnGirls" onclick="selectGender('girls')">
+                    <span class="emoji">👧</span>
+                    <span>للبنات</span>
+                </button>
+                <button class="gender-btn" id="btnBoys" onclick="selectGender('boys')">
+                    <span class="emoji">👦</span>
+                    <span>للولاد</span>
+                </button>
+            </div>
+
+            <div class="slot-machine">
+                <div class="slot-display">
+                    <div class="slot-reel" id="reel1">🎁</div>
+                    <div class="slot-reel" id="reel2">🐑</div>
+                    <div class="slot-reel" id="reel3">🌙</div>
+                </div>
+                <button class="spin-btn" id="spinBtn" onclick="spin()">🎰 اضغط Spin!</button>
+            </div>
+        </div>
+
+        <!-- PHASE 2: Personal Card + Games -->
+        <div class="phase-2" id="phase2">
+            <div class="win-animation" id="winEmoji">🎉</div>
+
+            <!-- Personal Card -->
+            <div class="personal-card" id="personalCard">
+                <div class="card-stamp">عيد مبارك</div>
+                <div class="name-display" id="cardName"></div>
+                <div class="greeting-text" id="cardGreeting"></div>
+                <div class="card-footer" id="cardFooter"></div>
+            </div>
+
+            <!-- Scratch Card -->
+            <div class="scratch-container" id="scratchContainer">
+                <div class="scratch-message" id="scratchMessage"></div>
+                <div class="scratch-overlay" id="scratchOverlay">
+                    <span class="scratch-overlay-text">🪙 افرك هنا!</span>
+                </div>
+            </div>
+
+            <!-- ====== NEW INNOVATIVE GAMES ====== -->
+            <div class="games-section">
+                <h3>🎪 ألعاب العيد المبتكرة!</h3>
+
+                <!-- Game 1: Sheep Chase - مطاردة الخروف -->
+                <div class="sheep-chase" id="sheepChase">
+                    <h4>🏃‍♂️ مطاردة الخروف - اصطاد الخروف قبل ما يهرب!</h4>
+                    <div class="chase-area" id="chaseArea">
+                        <div class="chase-score" id="chaseScore">🐑 0</div>
+                        <div class="chase-timer" id="chaseTimer">⏱️ 15</div>
+                    </div>
+                    <button class="chase-start-btn" id="chaseStartBtn" onclick="startChase()">🎮 ابدأ اللعبة!</button>
+                    <div class="chase-result" id="chaseResult">اضغط "ابدأ اللعبة" واصطاد أكبر عدد من الخرفان!</div>
+                </div>
+
+                <!-- Game 2: Eid Memory - ذاكرة العيد -->
+                <div class="eid-memory" id="eidMemory">
+                    <h4>🧠 ذاكرة العيد - افتكر أماكن الأضاحي!</h4>
+                    <div class="memory-grid" id="memoryGrid"></div>
+                    <div class="memory-result" id="memoryResult">اضغط على البطاقات عشان تكشف الأزواج!</div>
+                </div>
+
+                <!-- Game 3: Meat Delivery - سباق التوزيع -->
+                <div class="meat-delivery" id="meatDelivery">
+                    <h4>🚗 سباق التوزيع - أوصل اللحمة للبيوت!</h4>
+                    <div class="delivery-track" id="deliveryTrack">
+                        <div class="delivery-car" id="deliveryCar">🚚</div>
+                    </div>
+                    <div class="delivery-progress">
+                        <div class="delivery-progress-fill" id="deliveryProgress"></div>
+                    </div>
+                    <div class="delivery-controls">
+                        <button class="delivery-btn" onclick="moveCar()">🚀 انطلق!</button>
+                        <button class="delivery-btn" onclick="jumpCar()">⬆️ اقفز!</button>
+                    </div>
+                    <div class="delivery-result" id="deliveryResult">وصل اللحمة للبيوت بأسرع وقت!</div>
+                </div>
+            </div>
+
+            <!-- Energy -->
+            <div class="energy-section">
+                <h3>⚡ شحن الطاقة الإيمانية</h3>
+                <div class="energy-bar">
+                    <div class="energy-fill" id="energyFill"></div>
+                </div>
+                <p class="energy-text" id="energyText">اضغط عشان تشحن طاقتك الإيمانية! 💪</p>
+                <button class="btn btn-green" onclick="chargeEnergy()">⚡ شحن</button>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <button class="btn btn-gold" onclick="shareGift()">📤 شارك</button>
+                <button class="btn btn-rose" onclick="resetAll()">🔄 العب تاني</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let studentName = '';
+        let selectedGender = null;
+        let energyLevel = 0;
+        let isScratching = false;
+
+        // Game states
+        let chaseScore = 0;
+        let chaseTime = 15;
+        let chaseInterval = null;
+        let chaseActive = false;
+
+        let memoryFlipped = [];
+        let memoryMatched = 0;
+        let memoryLocked = false;
+
+        let carPosition = 0;
+        let deliveryHouses = 0;
+        let carJumping = false;
+
+        const emojis = ['🐑', '🌙', '🎁', '✨', '🌟', '🎉', '💖', '🔥', '💪', '😎', '👑', '🎯'];
+
+        const memoryIcons = ['🐑', '🐑', '🌙', '🌙', '🥩', '🥩', '🎁', '🎁', '✨', '✨', '🕌', '🕌'];
+
+        function goToPhase1() {
+            const input = document.getElementById('studentName');
+            const name = input.value.trim();
+
+            if (!name) {
+                input.style.borderColor = '#e74c3c';
+                setTimeout(() => {
+                    input.style.borderColor = '#d4a017';
+                }, 500);
+                return;
+            }
+
+            studentName = name;
+            document.getElementById('phase0').style.display = 'none';
+            document.getElementById('phase1').style.display = 'block';
+            document.getElementById('welcomeName').textContent = `🎉 أهلاً يا ${name}!`;
+
+            createConfetti(30);
+        }
+
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.getElementById('btnGirls').classList.toggle('selected', gender === 'girls');
+            document.getElementById('btnBoys').classList.toggle('selected', gender === 'boys');
+        }
+
+        function spin() {
+            if (!selectedGender) {
+                alert('👆 اختار "للبنات" أو "للولاد" الأول!');
+                return;
+            }
+
+            const btn = document.getElementById('spinBtn');
+            const reel1 = document.getElementById('reel1');
+            const reel2 = document.getElementById('reel2');
+            const reel3 = document.getElementById('reel3');
+
+            btn.disabled = true;
+            btn.textContent = '🎰 بيشتغل...';
+
+            let spins = 0;
+            const spinInterval = setInterval(() => {
+                reel1.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                reel2.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                reel3.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                spins++;
+
+                if (spins >= 20) {
+                    clearInterval(spinInterval);
+
+                    reel1.textContent = '🐑';
+                    reel2.textContent = '🌙';
+                    reel3.textContent = '✨';
+
+                    createConfetti(100);
+
+                    setTimeout(() => {
+                        document.getElementById('phase1').style.display = 'none';
+                        document.getElementById('phase2').style.display = 'block';
+                        fillContent();
+                    }, 800);
+                }
+            }, 100);
+        }
+
+        function fillContent() {
+            const isGirl = selectedGender === 'girls';
+
+            document.getElementById('winEmoji').textContent = isGirl ? '👧🐑✨' : '👦🐑💪';
+            document.getElementById('cardName').innerHTML = `🎓 ${studentName}`;
+
+            if (isGirl) {
+                document.getElementById('cardGreeting').innerHTML = 
+                    `🌙 كل عام وأنتِ بخير يا <strong>${studentName}</strong>!<br>` +
+                    `تقبل الله منا ومنكم صالح الأعمال<br>` +
+                    `💫 ربنا يحققلك كل اللي بتتمناه<br>` +
+                    `ويجعل أيامكِ كلها عيد ونجاح! 💖`;
+                document.getElementById('cardFooter').textContent = `🎀 ${studentName} — أنتِ نجمة العيد 🌟`;
+                document.getElementById('scratchMessage').innerHTML = 
+                    `🌙 يا ${studentName}...<br>أنتِ قدها وقدود!<br>استمتعي بالعيد وارجعي بقوة 💪`;
+            } else {
+                document.getElementById('cardGreeting').innerHTML = 
+                    `🌙 كل سنة وأنت طيب يا <strong>${studentName}</strong>!<br>` +
+                    `تقبل الله منا ومنكم صالح الأعمال<br>` +
+                    `💪 ربنا يوفقك ويثبتك على الحق<br>` +
+                    `ويجعل أيامك كلها عيد ونجاح! 🔥`;
+                document.getElementById('cardFooter').textContent = `🎯 ${studentName} — أنت البطل بتاعنا 💪`;
+                document.getElementById('scratchMessage').innerHTML = 
+                    `🌙 يا ${studentName}...<br>أنت قدها وقدود!<br>استمتع بالعيد وارجع بقوة 💪`;
+            }
+
+            setupScratch();
+            initMemoryGame();
+            resetDeliveryGame();
+        }
+
+        // ====== GAME 1: SHEEP CHASE - مطاردة الخروف ======
+        function startChase() {
+            if (chaseActive) return;
+
+            chaseActive = true;
+            chaseScore = 0;
+            chaseTime = 15;
+
+            document.getElementById('chaseScore').textContent = `🐑 ${chaseScore}`;
+            document.getElementById('chaseTimer').textContent = `⏱️ ${chaseTime}`;
+            document.getElementById('chaseStartBtn').textContent = '⏳ جاري اللعب...';
+            document.getElementById('chaseResult').textContent = 'اصطاد الخرفان بسرعة! 🏃‍♂️';
+
+            const area = document.getElementById('chaseArea');
+            // Clear existing sheep
+            area.querySelectorAll('.chase-sheep').forEach(s => s.remove());
+
+            // Spawn sheep
+            spawnSheep();
+
+            // Timer
+            chaseInterval = setInterval(() => {
+                chaseTime--;
+                document.getElementById('chaseTimer').textContent = `⏱️ ${chaseTime}`;
+
+                if (chaseTime <= 0) {
+                    endChase();
+                } else if (chaseTime % 3 === 0) {
+                    spawnSheep();
+                }
+            }, 1000);
+        }
+
+        function spawnSheep() {
+            const area = document.getElementById('chaseArea');
+            const sheep = document.createElement('div');
+            sheep.className = 'chase-sheep';
+            sheep.textContent = '🐑';
+            sheep.style.top = (20 + Math.random() * 60) + '%';
+            sheep.style.left = (10 + Math.random() * 80) + '%';
+            sheep.onclick = function() { catchChaseSheep(this); };
+
+            // Add escape animation
+            setTimeout(() => {
+                if (sheep.parentNode) {
+                    sheep.style.transition = 'all 1s';
+                    sheep.style.left = '110%';
+                    setTimeout(() => {
+                        if (sheep.parentNode) sheep.remove();
+                    }, 1000);
+                }
+            }, 2000 + Math.random() * 2000);
+
+            area.appendChild(sheep);
+        }
+
+        function catchChaseSheep(sheep) {
+            if (!chaseActive || sheep.classList.contains('caught')) return;
+
+            sheep.classList.add('caught');
+            chaseScore++;
+            document.getElementById('chaseScore').textContent = `🐑 ${chaseScore}`;
+
+            createConfetti(5);
+
+            setTimeout(() => {
+                if (sheep.parentNode) sheep.remove();
+            }, 600);
+        }
+
+        function endChase() {
+            chaseActive = false;
+            clearInterval(chaseInterval);
+
+            document.getElementById('chaseStartBtn').textContent = '🎮 العب تاني!';
+
+            let message = '';
+            if (chaseScore >= 10) {
+                message = `🏆 ${studentName}! صياد محترف! صدقت ${chaseScore} خروف!`;
+                createConfetti(50);
+            } else if (chaseScore >= 5) {
+                message = `🥈 ممتاز ${studentName}! صدقت ${chaseScore} خرفان!`;
+                createConfetti(25);
+            } else {
+                message = `🥉 حاول تاني ${studentName}! صدقت ${chaseScore} بس!`;
+            }
+
+            document.getElementById('chaseResult').textContent = message;
+
+            // Clear remaining sheep
+            document.getElementById('chaseArea').querySelectorAll('.chase-sheep').forEach(s => s.remove());
+        }
+
+        // ====== GAME 2: EID MEMORY - ذاكرة العيد ======
+        function initMemoryGame() {
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            memoryFlipped = [];
+            memoryMatched = 0;
+            memoryLocked = false;
+
+            // Shuffle icons
+            const shuffled = [...memoryIcons].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.icon = icon;
+                card.dataset.index = index;
+
+                const front = document.createElement('span');
+                front.className = 'card-front';
+                front.textContent = '🎁';
+
+                const back = document.createElement('span');
+                back.className = 'card-back';
+                back.textContent = icon;
+
+                card.appendChild(front);
+                card.appendChild(back);
+                card.onclick = () => flipMemoryCard(card);
+
+                grid.appendChild(card);
+            });
+
+            document.getElementById('memoryResult').textContent = 'اضغط على البطاقات عشان تكشف الأزواج! 🧠';
+        }
+
+        function flipMemoryCard(card) {
+            if (memoryLocked || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+            card.classList.add('flipped');
+            memoryFlipped.push(card);
+
+            if (memoryFlipped.length === 2) {
+                memoryLocked = true;
+                checkMemoryMatch();
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [card1, card2] = memoryFlipped;
+
+            if (card1.dataset.icon === card2.dataset.icon) {
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    memoryMatched++;
+                    memoryFlipped = [];
+                    memoryLocked = false;
+
+                    createConfetti(10);
+
+                    if (memoryMatched === memoryIcons.length / 2) {
+                        document.getElementById('memoryResult').innerHTML = 
+                            `🎉 برافو ${studentName}! فزت بذاكرة العيد!`;
+                        createConfetti(40);
+                    } else {
+                        document.getElementById('memoryResult').textContent = 
+                            `✅ زوج صح! كمل! (${memoryMatched}/${memoryIcons.length/2})`;
+                    }
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    memoryFlipped = [];
+                    memoryLocked = false;
+                    document.getElementById('memoryResult').textContent = '❌ غلط! حاول تاني! 🧠';
+                }, 1000);
+            }
+        }
+
+        // ====== GAME 3: MEAT DELIVERY - سباق التوزيع ======
+        function resetDeliveryGame() {
+            carPosition = 0;
+            deliveryHouses = 0;
+            carJumping = false;
+
+            const car = document.getElementById('deliveryCar');
+            car.style.left = '10px';
+            car.textContent = '🚚';
+
+            document.getElementById('deliveryProgress').style.width = '0%';
+            document.getElementById('deliveryResult').textContent = 'وصل اللحمة للبيوت بأسرع وقت! 🚗';
+
+            // Clear obstacles
+            document.getElementById('deliveryTrack').querySelectorAll('.delivery-obstacle').forEach(o => o.remove());
+        }
+
+        function moveCar() {
+            if (carPosition >= 100) return;
+
+            carPosition += 10;
+            const car = document.getElementById('deliveryCar');
+            car.style.left = `calc(${carPosition}% - 30px)`;
+
+            document.getElementById('deliveryProgress').style.width = carPosition + '%';
+
+            // Random obstacle
+            if (Math.random() > 0.7 && carPosition < 90) {
+                spawnObstacle();
+            }
+
+            if (carPosition >= 100) {
+                deliveryHouses++;
+                document.getElementById('deliveryResult').textContent = 
+                    `🎉 ${studentName}! وصلت اللحمة لـ ${deliveryHouses} بيت!`;
+                createConfetti(20);
+
+                setTimeout(() => {
+                    carPosition = 0;
+                    car.style.left = '10px';
+                    document.getElementById('deliveryProgress').style.width = '0%';
+                }, 1000);
+            }
+        }
+
+        function jumpCar() {
+            if (carJumping) return;
+
+            carJumping = true;
+            const car = document.getElementById('deliveryCar');
+            car.style.transform = 'translateY(-30px)';
+
+            setTimeout(() => {
+                car.style.transform = 'translateY(0)';
+                carJumping = false;
+            }, 500);
+        }
+
+        function spawnObstacle() {
+            const track = document.getElementById('deliveryTrack');
+            const obstacle = document.createElement('div');
+            obstacle.className = 'delivery-obstacle';
+            obstacle.textContent = ['🪨', '🌵', '🕳️'][Math.floor(Math.random() * 3)];
+            obstacle.style.bottom = '10px';
+            obstacle.style.left = '100%';
+
+            track.appendChild(obstacle);
+
+            setTimeout(() => {
+                if (obstacle.parentNode) obstacle.remove();
+            }, 3000);
+        }
+
+        function setupScratch() {
+            const overlay = document.getElementById('scratchOverlay');
+            let scratched = false;
+
+            const scratch = (e) => {
+                if (scratched) return;
+                const rect = overlay.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+                const hole = document.createElement('div');
+                hole.style.position = 'absolute';
+                hole.style.left = (x - 20) + 'px';
+                hole.style.top = (y - 20) + 'px';
+                hole.style.width = '40px';
+                hole.style.height = '40px';
+                hole.style.borderRadius = '50%';
+                hole.style.background = 'transparent';
+                overlay.appendChild(hole);
+
+                if (overlay.children.length > 15) {
+                    scratched = true;
+                    overlay.classList.add('scratched');
+                    createConfetti(20);
+                }
+            };
+
+            overlay.addEventListener('mousedown', () => isScratching = true);
+            overlay.addEventListener('mouseup', () => isScratching = false);
+            overlay.addEventListener('mousemove', (e) => { if (isScratching) scratch(e); });
+
+            overlay.addEventListener('touchstart', () => isScratching = true);
+            overlay.addEventListener('touchend', () => isScratching = false);
+            overlay.addEventListener('touchmove', (e) => { if (isScratching) { e.preventDefault(); scratch(e); } });
+        }
+
+        function createConfetti(count) {
+            const colors = ['#d4a017', '#2e8b57', '#e74c3c', '#ff8c00', '#e8b4b8', '#1565c0', '#8e24aa', '#ffd700'];
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 10 + 6) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 6) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 15);
+            }
+        }
+
+        function chargeEnergy() {
+            energyLevel = Math.min(100, energyLevel + 25);
+            document.getElementById('energyFill').style.width = energyLevel + '%';
+
+            const texts = [
+                '⚡ طاقتك الإيمانية بتزيد! كمل!',
+                '💪 نص الطاقة! أنت قدها!',
+                '🔥 طاقة إيمانية عالية! جاهز!',
+                '⚡⚡⚡ فول! انطلق! 🚀'
+            ];
+
+            const index = Math.min(Math.floor(energyLevel / 25) - 1, 3);
+            document.getElementById('energyText').textContent = texts[index] || texts[0];
+
+            if (energyLevel >= 100) {
+                setTimeout(() => createConfetti(50), 300);
+            }
+        }
+
+        function shareGift() {
+            const genderText = selectedGender === 'girls' ? 'للبنات' : 'للولاد';
+            const message = `🐑 عيد أضحى مبارك يا ${studentName}! 🌙
+
+عجلة العيد السحرية ${genderText}:
+${window.location.href}`;
+
+            if (navigator.share) {
+                navigator.share({ title: `عجلة العيد السحرية 🎰`, text: message, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(message).then(() => {
+                    alert('📋 تم نسخ الرابط! شاركه مع أصحابك!');
+                });
+            }
+        }
+
+        function resetAll() {
+            document.getElementById('phase2').style.display = 'none';
+            document.getElementById('phase1').style.display = 'none';
+            document.getElementById('phase0').style.display = 'block';
+
+            document.getElementById('studentName').value = '';
+
+            const btn = document.getElementById('spinBtn');
+            btn.disabled = false;
+            btn.textContent = '🎰 اضغط Spin!';
+
+            document.getElementById('reel1').textContent = '🎁';
+            document.getElementById('reel2').textContent = '🐑';
+            document.getElementById('reel3').textContent = '🌙';
+
+            const overlay = document.getElementById('scratchOverlay');
+            overlay.classList.remove('scratched');
+            overlay.innerHTML = '<span class="scratch-overlay-text">🪙 افرك هنا!</span>';
+
+            studentName = '';
+            selectedGender = null;
+            energyLevel = 0;
+
+            // Reset games
+            chaseActive = false;
+            clearInterval(chaseInterval);
+            chaseScore = 0;
+            chaseTime = 15;
+
+            memoryFlipped = [];
+            memoryMatched = 0;
+            memoryLocked = false;
+
+            carPosition = 0;
+            deliveryHouses = 0;
+
+            document.getElementById('btnGirls').classList.remove('selected');
+            document.getElementById('btnBoys').classList.remove('selected');
+            document.getElementById('energyFill').style.width = '0%';
+            document.getElementById('energyText').textContent = 'اضغط عشان تشحن طاقتك الإيمانية! 💪';
+        }
+
+        document.getElementById('studentName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') goToPhase1();
+        });
+    </script>
+</body>
+</html>
